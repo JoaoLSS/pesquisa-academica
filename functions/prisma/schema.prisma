@@ -31,6 +31,9 @@ model Question {
   index Int
   alternatives Alternative[]
   answers Answer[]
+
+  //we cannot have two questions with same index in the same survey
+  @@unique([surveyId,index])
 }
 
 model Alternative {
@@ -41,6 +44,9 @@ model Alternative {
   slug String @db.Text
   index Int
   answers Answer[]
+
+  //we cannot have two alternatives with same index in the same question
+  @@unique([questionId,index])
 }
 
 model Answer {
@@ -50,4 +56,7 @@ model Answer {
   alternative Alternative @relation(fields: [alternativeId], references: [id])
   alternativeId Int
   userId String @db.VarChar(255)
+
+  //we cannot have the same user responding two the same alternative in the same question twice
+  @@unique([questionId,alternativeId,userId])
 }
