@@ -15,8 +15,39 @@ model Survey {
   userId String @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  openedAt DateTime
-  closedAt DateTime
+  openedAt DateTime?
+  closedAt DateTime?
   title String @db.Text
   slug String @db.Text
+  questions Question[]
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+  survey Survey @relation(fields: [surveyId], references: [id])
+  surveyId Int
+  text String @db.Text
+  slug String @db.Text
+  index Int
+  alternatives Alternative[]
+  answers Answer[]
+}
+
+model Alternative {
+  id Int @id @default(autoincrement())
+  question Question @relation(fields: [questionId], references: [id])
+  questionId Int
+  text String @db.Text
+  slug String @db.Text
+  index Int
+  answers Answer[]
+}
+
+model Answer {
+  id Int @id @default(autoincrement())
+  question Question @relation(fields: [questionId], references: [id])
+  questionId Int
+  alternative Alternative @relation(fields: [alternativeId], references: [id])
+  alternativeId Int
+  userId String @db.VarChar(255)
 }
