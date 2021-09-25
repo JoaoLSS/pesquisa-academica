@@ -1,0 +1,21 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import {ApolloServer, gql} from "apollo-server-cloud-functions";
+
+// Construct a schema, using GraphQL schema language
+const typeDefs = gql`
+  type Query {
+    hello: String
+  }
+`;
+
+// Provide resolver functions for your schema fields
+const resolvers = {
+  Query: {
+    hello: () => "Hello seila!",
+  },
+};
+
+export default new ApolloServer({
+  typeDefs,
+  resolvers,
+});

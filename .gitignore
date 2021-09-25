@@ -1,0 +1,6 @@
+# MacOS related
+.DS_Store
+
+# vscode related
+.vscode
+*.log
