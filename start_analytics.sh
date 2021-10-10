@@ -1,1 +1,0 @@
-functions-framework --source analytics/main.py --target hello_world --debug
