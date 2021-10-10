@@ -17,14 +17,13 @@ const DateTime = new GraphQLScalarType({
   },
 });
 
-type Survey = Resolver<{ id: number }>
-const survey: Survey = (_, {id}, {dataSourcers: {prisma}}) => {
-  return prisma.survey.findFirst({where: {id}});
-};
+// type Survey = Resolver<{ id: number }>
+// const survey: Survey = (_, {id}, {dataSourcers: {prisma}}) => {
+//   return prisma.survey.findFirst({where: {id}});
+// };
 
 export default {
   DateTime,
   Query: {
-    survey,
   },
 };
