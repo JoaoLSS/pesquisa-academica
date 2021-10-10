@@ -5,3 +5,6 @@
 .vscode
 *.log
 .firebase
+
+#python
+__pycache__
