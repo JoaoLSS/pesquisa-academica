@@ -1,6 +1,5 @@
 import {GraphQLScalarType, Kind} from "graphql";
-import * as functions from "firebase-functions";
-import {ForbiddenError} from "apollo-server-cloud-functions";
+import {ApolloError, AuthenticationError} from "apollo-server-cloud-functions";
 
 const DateTime = new GraphQLScalarType({
   name: "DateTime",
@@ -19,14 +18,101 @@ const DateTime = new GraphQLScalarType({
   },
 });
 
-type Survey = Resolver<{ id: string }>
-const mySurvey: Survey = (_, {id}, {dataSources: {prisma}, user}) => {
-  functions.logger.info({user, id});
-  if (!user) throw new ForbiddenError("user is not authenticated");
-  return prisma.survey.findFirst({
+type MySurvey = Resolver<{ id: string }>
+const mySurvey: MySurvey = (_, {id}, {dataSources: {prisma}, user}) => {
+  if (!user) throw new AuthenticationError("user is not authenticated");
+  const survey = prisma.survey.findFirst({
     where: {id: Number(id), userId: user.uid},
     include: {
-      questions: true,
+      questions: {
+        include: {
+          alternatives: true,
+          answers: true,
+        },
+      },
+    },
+  });
+  if (!survey) throw new ApolloError("survey not found", "404");
+  return survey;
+};
+
+type SurveyIRespond = Resolver<{ id:string }>
+const surveyIRespond: SurveyIRespond = (
+    _,
+    {id},
+    {dataSources: {prisma}, user}
+) => {
+  if (!user) throw new AuthenticationError("user is not authenticated");
+  const survey = prisma.survey.findFirst({
+    where: {
+      id: Number(id),
+    },
+    include: {
+      questions: {
+        include: {
+          alternatives: true,
+          answers: {
+            where: {
+              userId: user.uid,
+            },
+          },
+        },
+      },
+    },
+  });
+  if (!survey) throw new ApolloError("survey not found", "404");
+  return survey;
+};
+
+type MySurveys = Resolver<never>
+const mySurveys: MySurveys = (_, __, {dataSources: {prisma}, user}) => {
+  if (!user) throw new AuthenticationError("user is not authenticated");
+  return prisma.survey.findMany({
+    where: {userId: user.uid},
+    include: {
+      questions: {
+        include: {
+          alternatives: true,
+          answers: true,
+        },
+      },
+    },
+  });
+};
+
+type SurveysIResponded = Resolver<never>
+const surveysIResponded: SurveysIResponded = (
+    _,
+    __,
+    {dataSources: {prisma}, user}
+) => {
+  if (!user) throw new AuthenticationError("user is not authenticated");
+  return prisma.survey.findMany({
+    where: {
+      questions: {
+        some: {},
+        every: {
+          answers: {
+            some: {
+              userId: {
+                equals: user.uid,
+              },
+            },
+          },
+        },
+      },
+    },
+    include: {
+      questions: {
+        include: {
+          alternatives: true,
+          answers: {
+            where: {
+              userId: user.uid,
+            },
+          },
+        },
+      },
     },
   });
 };
@@ -35,5 +121,8 @@ export default {
   DateTime,
   Query: {
     mySurvey,
+    surveyIRespond,
+    mySurveys,
+    surveysIResponded,
   },
 };

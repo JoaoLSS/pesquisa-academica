@@ -14,7 +14,6 @@ const analyticsSelector = selectorFamily({
             }
         })
         if(response.status >= 400) throw response
-        console.log(response.data)
         return response.data
     },
     dangerouslyAllowMutability: true
