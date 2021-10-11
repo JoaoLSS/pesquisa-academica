@@ -1,2 +1,5 @@
-
-(trap 'kill 0' SIGINT; functions-framework --source analytics/main.py --target hello_world --debug & firebase serve --only functions --port=5005 & npm start --prefix frontend)
+export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
+(trap 'kill 0' SIGINT; 
+    firebase emulators:start --only auth,functions &
+    functions-framework --source analytics/main.py --target hello_world --debug &
+    npm start --prefix frontend)

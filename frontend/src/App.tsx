@@ -1,20 +1,18 @@
+import { RecoilRoot } from 'recoil'
+import { ApolloProvider } from '@apollo/client'
+import Routes from './routes'
+import client from './graphql/setup';
+import { Suspense } from 'react';
+
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RecoilRoot>
+      <ApolloProvider client={client}>
+        <Suspense fallback={<span/>}>
+          <Routes/>
+        </Suspense>
+      </ApolloProvider>
+    </RecoilRoot>
   );
 }
 

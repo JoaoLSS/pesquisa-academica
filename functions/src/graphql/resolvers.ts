@@ -1,4 +1,6 @@
 import {GraphQLScalarType, Kind} from "graphql";
+import * as functions from "firebase-functions";
+import {ForbiddenError} from "apollo-server-cloud-functions";
 
 const DateTime = new GraphQLScalarType({
   name: "DateTime",
@@ -17,13 +19,21 @@ const DateTime = new GraphQLScalarType({
   },
 });
 
-// type Survey = Resolver<{ id: number }>
-// const survey: Survey = (_, {id}, {dataSourcers: {prisma}}) => {
-//   return prisma.survey.findFirst({where: {id}});
-// };
+type Survey = Resolver<{ id: string }>
+const mySurvey: Survey = (_, {id}, {dataSources: {prisma}, user}) => {
+  functions.logger.info({user, id});
+  if (!user) throw new ForbiddenError("user is not authenticated");
+  return prisma.survey.findFirst({
+    where: {id: Number(id), userId: user.uid},
+    include: {
+      questions: true,
+    },
+  });
+};
 
 export default {
   DateTime,
   Query: {
+    mySurvey,
   },
 };

@@ -4,6 +4,9 @@ import {PrismaClient} from "@prisma/client";
 import {DataSource} from "apollo-datasource";
 import resolvers from "./resolvers";
 import typeDefs from "./typeDefs";
+import * as admin from "firebase-admin";
+
+admin.initializeApp();
 
 export default new ApolloServer({
   typeDefs,
@@ -11,4 +14,12 @@ export default new ApolloServer({
   dataSources: () => ({
     prisma: new PrismaClient() as DataSource,
   }),
+  context: async ({req}) => {
+    const token = (req.headers.authorization || "").split(" ")[1];
+    if (token) {
+      const user = await admin.auth().verifyIdToken(token);
+      return {user};
+    }
+    return {};
+  },
 });
