@@ -10,11 +10,11 @@ interface RouteParams {
   id: string;
 }
 
-const MySurvey: React.FC = () => (
+const MySurveys: React.FC = () => (
   <div>
-    <Navbar title="Survey" />
+    <Navbar title="Surveys" />
   </div>
 );
-MySurvey.displayName = 'MySurvey';
+MySurveys.displayName = 'MySurveys';
 
-export default MySurvey;
+export default MySurveys;
