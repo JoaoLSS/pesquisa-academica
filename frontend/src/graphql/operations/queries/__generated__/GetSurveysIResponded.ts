@@ -7,16 +7,17 @@
 // GraphQL query operation: GetSurveysIResponded
 // ====================================================
 
-export interface GetSurveysIResponded_surveysIResponded_questions {
-  __typename: "Question";
-  id: string;
-}
-
 export interface GetSurveysIResponded_surveysIResponded {
-  __typename: "Survey";
+  __typename: "SurveyWithoutQuestions";
   id: string;
-  createdAt: any;
-  questions: GetSurveysIResponded_surveysIResponded_questions[];
+  userId: string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  openedAt: DateTime | null;
+  closedAt: DateTime | null;
+  title: string;
+  slug: string;
+  questionsCount: number;
 }
 
 export interface GetSurveysIResponded {

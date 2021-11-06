@@ -7,19 +7,29 @@
 // GraphQL query operation: GetSurveyIRespond
 // ====================================================
 
+export interface GetSurveyIRespond_mySurvey_questions_alternatives {
+  __typename: "Alternative";
+  id: string;
+  text: string;
+  index: number;
+}
+
 export interface GetSurveyIRespond_mySurvey_questions {
   __typename: "Question";
   id: string;
+  text: string;
+  index: number;
+  alternatives: GetSurveyIRespond_mySurvey_questions_alternatives[];
 }
 
 export interface GetSurveyIRespond_mySurvey {
-  __typename: "Survey";
+  __typename: "SurveyWithQuestions";
   id: string;
   userId: string;
-  createdAt: any;
-  updatedAt: any;
-  openedAt: any | null;
-  closedAt: any | null;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  openedAt: DateTime | null;
+  closedAt: DateTime | null;
   title: string;
   slug: string;
   questions: GetSurveyIRespond_mySurvey_questions[];

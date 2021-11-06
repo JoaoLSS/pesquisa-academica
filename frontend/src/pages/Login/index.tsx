@@ -1,34 +1,41 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider } from '@firebase/auth';
-import { Button, Container, Paper, TextField } from '@material-ui/core';
-import React from 'react';
-import { Navbar } from '../../components';
-import analytics from '../../illustrations/analytics.svg';
-
-const googleProvider = new GoogleAuthProvider();
+import { Button, TextField } from '@material-ui/core';
+import { Google } from '@material-ui/icons';
+import { useRef } from 'react';
+import { useAsyncFn } from 'utils/hooks';
+import { Navbar, Separator, PasswordField } from 'components';
+import { analytics } from 'illustrations';
+import * as C from './styles';
+import * as U from './utils';
 
 const Login: React.FC = () => {
-  const [loading, setLoading] = React.useState(false);
-  const loginWithGoogle = React.useCallback(() => {
-    if (loading) return;
-    setLoading(true);
-    const auth = getAuth();
-    signInWithPopup(auth, googleProvider).catch((error) => {
-      setLoading(false);
-    });
-  }, [loading]);
-  return (
-    <Container
-      style={{ height: '100vh', placeItems: 'center', display: 'grid' }}
-    >
-      <Navbar hide />
-      <Paper elevation={3}>
-        <img src={analytics} alt="analytics_hero" />
-        <TextField label="Email" />
-        <TextField label="Senha" />
-        <Button onClick={loginWithGoogle}>Google</Button>
-      </Paper>
-    </Container>
-  );
+	// REFS
+	const userRef = useRef<HTMLInputElement>(null);
+	const passwordRef = useRef<HTMLInputElement>(null);
+	// CALLBACKS
+	const [, loginWithGoogle] = useAsyncFn(U.loginWithGoogle);
+	const [{ error }, loginWithCredentials] = useAsyncFn(U.loginWithCredentials({ userRef, passwordRef }));
+	const [userError, passwordError] = U.checkErrors(error);
+	return (
+		<C.Container>
+			<Navbar hide />
+			<C.LoginPanel>
+				<C.Title>Pesquisa Acadêmica</C.Title>
+				<img src={analytics} alt="analytics_hero" />
+				<C.LoginForm>
+					<TextField inputRef={userRef} label="Email" error={userError} />
+					<PasswordField inputRef={passwordRef} label="Senha" error={passwordError} />
+					<Button onClick={loginWithCredentials}>Login</Button>
+					<C.NotRegistered>
+						Não tem cadastro? <a href="/signin">Registre-se</a>
+					</C.NotRegistered>
+					<Separator verticalSpace="10px" />
+					<Button onClick={loginWithGoogle} startIcon={<Google />}>
+						Login com Google
+					</Button>
+				</C.LoginForm>
+			</C.LoginPanel>
+		</C.Container>
+	);
 };
 
 Login.displayName = 'Login';

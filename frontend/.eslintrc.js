@@ -1,43 +1,56 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: [
-    'airbnb',
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
-  globals: {
-    React: 'readonly',
-  },
-  parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  plugins: ['react', '@typescript-eslint'],
-  rules: {
-    'import/prefer-default-export': 'off',
-    'import/extensions': [
-      'error',
-      'ignorePackages',
-      {
-        ts: 'never',
-        tsx: 'never',
-      },
-    ],
-    'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
-    'import/no-extraneous-dependencies': 'off',
-    'comma-dangle': 'off',
-    'object-curly-newline': 'off',
-  },
+	env: {
+		browser: true,
+		es2021: true,
+	},
+	extends: [
+		'airbnb',
+		'plugin:import/errors',
+		'plugin:import/warnings',
+		'plugin:import/typescript',
+		'plugin:react/recommended',
+		'plugin:react/jsx-runtime',
+		'plugin:@typescript-eslint/eslint-recommended',
+		'plugin:@typescript-eslint/recommended',
+	],
+	globals: {
+		React: 'readonly',
+	},
+	parser: '@typescript-eslint/parser',
+	parserOptions: {
+		ecmaFeatures: {
+			jsx: true,
+		},
+		ecmaVersion: 12,
+		sourceType: 'module',
+	},
+	plugins: ['react', '@typescript-eslint'],
+	rules: {
+		'import/prefer-default-export': 'off',
+		'import/extensions': [
+			'error',
+			'ignorePackages',
+			{
+				ts: 'never',
+				tsx: 'never',
+			},
+		],
+		'react/jsx-filename-extension': [1, { extensions: ['.tsx', '.jsx'] }],
+		'import/no-extraneous-dependencies': 'off',
+		'comma-dangle': 'off',
+		'object-curly-newline': 'off',
+		'max-len': ['error', 120],
+		indent: 'off',
+		'no-tabs': 'off',
+		'implicit-arrow-linebreak': 'off',
+		'react/jsx-indent': 'off',
+		'react/jsx-indent-props': 'off',
+		'import/no-unresolved': 'off',
+		'max-classes-per-file': 'off',
+		'react/require-default-props': 'off',
+		'react/jsx-one-expression-per-line': 'off',
+		'react/jsx-no-duplicate-props': 'off',
+		'react/prop-types': 'off',
+		'operator-linebreak': 'off',
+	},
 };

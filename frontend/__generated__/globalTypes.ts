@@ -7,6 +7,20 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CreateAlternativeInput {
+  title: string;
+}
+
+export interface CreateQuestionInput {
+  title: string;
+  alternatives: CreateAlternativeInput[];
+}
+
+export interface CreateSurveyInput {
+  title: string;
+  questions: CreateQuestionInput[];
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

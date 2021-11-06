@@ -1,20 +1,22 @@
+import { useRecoilValue } from 'recoil';
+import { Navbar } from 'components';
+import { GetMySurvey } from 'graphql/operations/queries';
 import { useParams } from 'react-router';
-import { Navbar } from '../../components';
-import { useQuery } from '../../graphql/hooks';
-import {
-  GET_SURVEYS_I_RESPONDED,
-  Types,
-} from '../../graphql/operations/queries';
 
 interface RouteParams {
-  id: string;
+	id: string;
 }
 
-const MySurvey: React.FC = () => (
-  <div>
-    <Navbar title="Survey" />
-  </div>
-);
+const MySurvey: React.VFC = () => {
+	const params = useParams<RouteParams>();
+	const result = useRecoilValue(GetMySurvey(params));
+	return (
+		<div>
+			<Navbar title={result.mySurvey.title} />
+		</div>
+	);
+};
+
 MySurvey.displayName = 'MySurvey';
 
 export default MySurvey;

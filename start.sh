@@ -3,6 +3,9 @@
 set -e
 
 function fb_emulator() {
+    cd functions;
+    npx tsc;
+    cd ..;
     firebase emulators:start --only auth,functions;
 }
 
@@ -12,6 +15,10 @@ function analytics() {
 
 function frontend() {
     npm start --prefix frontend
+}
+
+function frontend-watch() {
+    npm run start-watch --prefix frontend
 }
 
 function all() {

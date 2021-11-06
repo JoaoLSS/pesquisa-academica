@@ -1,62 +1,7 @@
-import { gql } from '@apollo/client'
-export * as Types from './__generated__'
+import * as Q from './definitions';
+import * as T from './__generated__';
 
-export const GET_ALL_MY_SURVEYS = gql`
-    query GetAllMySurveys {
-        mySurveys {
-            id
-            createdAt
-            questions {
-                id
-            }
-        }
-    }
-`
-
-export const GET_SURVEYS_I_RESPONDED = gql`
-    query GetSurveysIResponded {
-        surveysIResponded {
-            id
-            createdAt
-            questions {
-                id
-            }
-        }
-    }
-`
-
-export const GET_MY_SURVEY = gql`
-    query GetMySurvey($id: ID!) {
-        mySurvey(id: $id) {
-            id
-            userId
-            createdAt
-            updatedAt
-            openedAt
-            closedAt
-            title
-            slug
-            questions {
-                id
-            }
-        }
-    }
-`
-
-export const GET_SURVEY_I_RESPOND = gql`
-    query GetSurveyIRespond($id: ID!) {
-        mySurvey(id: $id) {
-            id
-            userId
-            createdAt
-            updatedAt
-            openedAt
-            closedAt
-            title
-            slug
-            questions {
-                id
-            }
-        }
-    }
-`
+export const GetAllMySurveys = Q.GetAllMySurveys as GQL_QUERY<T.GetAllMySurveys>;
+export const GetSurveysIResponded = Q.GetSurveysIResponded as GQL_QUERY<T.GetSurveysIResponded>;
+export const GetMySurvey = Q.GetMySurvey as GQL_QUERY<T.GetMySurvey, T.GetMySurveyVariables>;
+export const GetSurveyIRespond = Q.GetSurveyIRespond as GQL_QUERY<T.GetSurveyIRespond, T.GetSurveyIRespondVariables>;

@@ -7,16 +7,17 @@
 // GraphQL query operation: GetAllMySurveys
 // ====================================================
 
-export interface GetAllMySurveys_mySurveys_questions {
-  __typename: "Question";
-  id: string;
-}
-
 export interface GetAllMySurveys_mySurveys {
-  __typename: "Survey";
+  __typename: "SurveyWithoutQuestions";
   id: string;
-  createdAt: any;
-  questions: GetAllMySurveys_mySurveys_questions[];
+  userId: string;
+  createdAt: DateTime;
+  updatedAt: DateTime;
+  openedAt: DateTime | null;
+  closedAt: DateTime | null;
+  title: string;
+  slug: string;
+  questionsCount: number;
 }
 
 export interface GetAllMySurveys {
