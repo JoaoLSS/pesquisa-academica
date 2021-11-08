@@ -1,5 +1,5 @@
 import { Button, Chip, Typography } from '@material-ui/core';
-import { Navbar, Container, ButtonContainer, StepCard, ImageContainer } from 'components';
+import { Navbar, Container, ButtonContainer, StepCard, ImageContainer, useSnackbar } from 'components';
 import { GetAllMySurveys } from 'graphql/operations/queries';
 import { useHistory } from 'react-router';
 import { useRecoilValue } from 'recoil';
@@ -8,6 +8,7 @@ import { booleanFilter, formatDate, preventDefault } from 'utils/common';
 import { useMutation } from 'graphql/utils';
 import { closeSurvey, openSurvey } from 'graphql/operations/mutations';
 import { useCloseSurveyOptions, useOpenSurveyOptions } from 'graphql/operations/mutations/options';
+import { useCallback } from 'react';
 import * as C from './styles';
 import * as K from './constants';
 import { getChipColor, getStatus } from './utils';
@@ -23,10 +24,18 @@ const dateAt = (...strs: string[]) => strs.map((str) => <Typography key={str}>{s
 const MySurveys: React.VFC = () => {
 	const result = useRecoilValue(GetAllMySurveys);
 	const openSurveyOptions = useOpenSurveyOptions();
-	const [open] = useMutation(openSurvey, openSurveyOptions);
+	const [open, { loading: opening }] = useMutation(openSurvey, openSurveyOptions);
 	const closeSurveyOptions = useCloseSurveyOptions();
-	const [close] = useMutation(closeSurvey, closeSurveyOptions);
+	const [close, { loading: closing }] = useMutation(closeSurvey, closeSurveyOptions);
 	const history = useHistory();
+	const snackbar = useSnackbar();
+	const copyToClipboard = useCallback((id: string) => {
+		navigator.clipboard.writeText(`${window.location.protocol}://${window.location.host}/respond/${id}`);
+		snackbar({
+			severity: 'success',
+			message: 'A URL da pesquisa foi copiada para sua area de transferencia!',
+		});
+	}, []);
 	return (
 		<Container>
 			<Navbar title="Minhas Pesquisas" />
@@ -49,10 +58,24 @@ const MySurveys: React.VFC = () => {
 						<Chip color={getChipColor(survey)} size="small" label={getStatus(survey)} />
 						<ButtonContainer justify="flex-start">
 							{!survey.openedAt && (
-								<Button onClick={preventDefault(() => open({ id: survey.id }))}>Abrir</Button>
+								<Button
+									disabled={opening}
+									onClick={preventDefault(() => !opening && open({ id: survey.id }))}
+								>
+									Abrir
+								</Button>
 							)}
 							{survey.openedAt && !survey.closedAt && (
-								<Button onClick={preventDefault(() => close({ id: survey.id }))}>Encerrar</Button>
+								<Button onClick={preventDefault(() => copyToClipboard(survey.id))}>Compartilhar</Button>
+							)}
+							{survey.openedAt && !survey.closedAt && (
+								<Button
+									color="error"
+									disabled={closing}
+									onClick={preventDefault(() => !closing && close({ id: survey.id }))}
+								>
+									Encerrar
+								</Button>
 							)}
 						</ButtonContainer>
 					</C.SurveyContainer>

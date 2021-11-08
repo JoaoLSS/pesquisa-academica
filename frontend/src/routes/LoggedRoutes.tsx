@@ -3,6 +3,7 @@ import * as Pages from 'pages';
 
 const LoggedRoutes: React.VFC = () => (
 	<Switch>
+		<Redirect from="/" to="/surveys" exact />
 		<Route path="/surveys" exact>
 			<Pages.MySurveys />
 		</Route>
