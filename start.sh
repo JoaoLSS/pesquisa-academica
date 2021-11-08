@@ -2,11 +2,11 @@
 
 set -e
 
-function fb_emulator() {
+function fb-emulator() {
     cd functions;
     npx tsc;
     cd ..;
-    firebase emulators:start --only auth,functions;
+    firebase emulators:start --only functions;
 }
 
 function analytics() {

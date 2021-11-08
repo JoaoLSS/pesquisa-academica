@@ -89,10 +89,24 @@ export default gql`
 		title: String!
 	}
 
+	input RespondSurveyInput {
+		id: ID!
+		questions: [RespondQuestionInput!]!
+	}
+
+	input RespondQuestionInput {
+		id: ID!
+		answer: RespondAnswerInput!
+	}
+
+	input RespondAnswerInput {
+		alternativeId: ID!
+	}
+
 	type Mutation {
 		createSurvey(survey: CreateSurveyInput!): Survey!
 		openSurvey(id: ID!): Survey!
 		closeSurvey(id: ID!): Survey!
-		respondSurvey: Survey!
+		respondSurvey(response: RespondSurveyInput!): Survey!
 	}
 `;

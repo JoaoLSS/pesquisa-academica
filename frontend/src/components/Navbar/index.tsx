@@ -29,10 +29,11 @@ const NavbarInternal: React.FC<NavbarProps> = ({ title, hide }) => {
 	const [theme, toggleTheme] = useThemeMode();
 	const history = useHistory();
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-	const [userLoadable, logout] = useUserLoadable();
+	const [, logout] = useUserLoadable();
 	const [drawer, setDrawer] = React.useState(false);
 
-	const handleMenu: React.MouseEventHandler<HTMLElement> = ({ currentTarget }) => setAnchorEl(currentTarget);
+	const handleMenu: React.MouseEventHandler<HTMLElement> = ({ currentTarget }) =>
+		setAnchorEl(currentTarget);
 
 	const handleClose = () => setAnchorEl(null);
 
@@ -44,8 +45,6 @@ const NavbarInternal: React.FC<NavbarProps> = ({ title, hide }) => {
 	if (hide) {
 		return null;
 	}
-
-	const profilePic = userLoadable.getValue()?.photoURL;
 
 	return (
 		<>
@@ -62,14 +61,9 @@ const NavbarInternal: React.FC<NavbarProps> = ({ title, hide }) => {
 					</IconButton>
 					<div>
 						<IconButton onClick={handleMenu}>
-							{profilePic ? (
-								<img style={{ width: 20, height: 20 }} src={profilePic} alt="profile" />
-							) : (
-								<AccountCircle />
-							)}
+							<AccountCircle />
 						</IconButton>
 						<Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-							<MenuItem>Minha conta</MenuItem>
 							<MenuItem onClick={handleLogout}>Sair</MenuItem>
 						</Menu>
 					</div>
@@ -80,9 +74,6 @@ const NavbarInternal: React.FC<NavbarProps> = ({ title, hide }) => {
 					<List>
 						<ListItem button onClick={() => history.push('/surveys')}>
 							<ListItemText primary="Minhas pesquisas" />
-						</ListItem>
-						<ListItem button>
-							<ListItemText primary="Minha conta" />
 						</ListItem>
 						<ListItem button onClick={handleLogout}>
 							<ListItemText primary="Sair" />

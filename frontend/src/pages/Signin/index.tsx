@@ -2,7 +2,7 @@ import { Button, TextField } from '@material-ui/core';
 import { useRef } from 'react';
 import { useAsyncFn } from 'utils/hooks';
 import { Navbar, PasswordField } from 'components';
-import { analytics } from 'illustrations';
+import { login } from 'illustrations';
 import * as C from './styles';
 import * as U from './utils';
 
@@ -21,7 +21,7 @@ const Signin: React.FC = () => {
 			<Navbar hide />
 			<C.LoginPanel>
 				<C.Title>Pesquisa Acadêmica</C.Title>
-				<img src={analytics} alt="analytics_hero" />
+				<img src={login} alt="login_hero" />
 				<C.SigninForm>
 					<TextField inputRef={fullNameRef} label="Nome completo" error={errors[0]} />
 					<TextField inputRef={emailRef} label="Email" error={errors[1]} />

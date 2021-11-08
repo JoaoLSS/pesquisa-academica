@@ -18,6 +18,9 @@ const include = (userId: string) =>
 const where = (id: number) =>
 	v<Prisma.SurveyWhereInput>()({
 		id,
+		openedAt: {
+			not: null,
+		},
 	});
 
 export const options = (id: number, userId: string) => ({

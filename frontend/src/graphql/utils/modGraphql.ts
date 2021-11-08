@@ -1,5 +1,5 @@
 import { gql as apolloGql } from '@apollo/client';
-import { atomFamily, atom } from 'recoil';
+import { atomFamily, atom, errorSelector } from 'recoil';
 import client from '../setup';
 
 export const gql = ([queryTemplate]: TemplateStringsArray) => {
@@ -17,7 +17,12 @@ export const gql = ([queryTemplate]: TemplateStringsArray) => {
 			effects_UNSTABLE: (variables) => [
 				({ setSelf }) => {
 					const observable = client.watchQuery({ query, variables });
-					const subscription = observable.subscribe((result) => setSelf(result.data));
+					const subscription = observable.subscribe(
+						({ data }) => setSelf(data),
+						(error) => {
+							throw error;
+						},
+					);
 					return subscription.unsubscribe;
 				},
 			],
@@ -30,7 +35,12 @@ export const gql = ([queryTemplate]: TemplateStringsArray) => {
 		effects_UNSTABLE: [
 			({ setSelf }) => {
 				const observable = client.watchQuery({ query });
-				const subscription = observable.subscribe((result) => setSelf(result.data));
+				const subscription = observable.subscribe(
+					({ data }) => setSelf(data),
+					(error) => {
+						throw error;
+					},
+				);
 				return subscription.unsubscribe;
 			},
 		],

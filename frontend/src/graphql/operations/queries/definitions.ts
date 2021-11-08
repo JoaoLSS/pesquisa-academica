@@ -52,6 +52,10 @@ export const GetMySurvey = gql`
 					text
 					index
 				}
+				answers {
+					id
+					alternativeId
+				}
 			}
 		}
 	}
@@ -59,7 +63,7 @@ export const GetMySurvey = gql`
 
 export const GetSurveyIRespond = gql`
 	query GetSurveyIRespond($id: ID!) {
-		mySurvey(id: $id) {
+		surveyIRespond(id: $id) {
 			id
 			userId
 			createdAt
@@ -76,6 +80,10 @@ export const GetSurveyIRespond = gql`
 					id
 					text
 					index
+				}
+				answers {
+					id
+					alternativeId
 				}
 			}
 		}

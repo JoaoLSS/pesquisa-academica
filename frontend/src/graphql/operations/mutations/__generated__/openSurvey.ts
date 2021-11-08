@@ -9,7 +9,7 @@
 
 export interface openSurvey_openSurvey {
   __typename: "Survey";
-  id: string;
+  title: string;
 }
 
 export interface openSurvey {

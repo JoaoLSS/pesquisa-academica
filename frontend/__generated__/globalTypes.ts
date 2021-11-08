@@ -21,6 +21,20 @@ export interface CreateSurveyInput {
   questions: CreateQuestionInput[];
 }
 
+export interface RespondAnswerInput {
+  alternativeId: string;
+}
+
+export interface RespondQuestionInput {
+  id: string;
+  answer: RespondAnswerInput;
+}
+
+export interface RespondSurveyInput {
+  id: string;
+  questions: RespondQuestionInput[];
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

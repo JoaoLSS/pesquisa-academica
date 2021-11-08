@@ -3,7 +3,7 @@ import { Google } from '@material-ui/icons';
 import { useRef } from 'react';
 import { useAsyncFn } from 'utils/hooks';
 import { Navbar, Separator, PasswordField } from 'components';
-import { analytics } from 'illustrations';
+import { login } from 'illustrations';
 import * as C from './styles';
 import * as U from './utils';
 
@@ -20,7 +20,7 @@ const Login: React.FC = () => {
 			<Navbar hide />
 			<C.LoginPanel>
 				<C.Title>Pesquisa Acadêmica</C.Title>
-				<img src={analytics} alt="analytics_hero" />
+				<img src={login} alt="login_hero" />
 				<C.LoginForm>
 					<TextField inputRef={userRef} label="Email" error={userError} />
 					<PasswordField inputRef={passwordRef} label="Senha" error={passwordError} />

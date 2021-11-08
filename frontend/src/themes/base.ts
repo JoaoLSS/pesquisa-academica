@@ -16,6 +16,14 @@ export const base: ThemeOptions = {
 			defaultProps: {
 				variant: 'contained',
 			},
+			styleOverrides: {
+				root: {
+					textTransform: 'none',
+					boxShadow: 'none',
+					fontWeight: 'bold',
+					borderRadius: '10px',
+				},
+			},
 		},
 		MuiIconButton: {
 			defaultProps: {

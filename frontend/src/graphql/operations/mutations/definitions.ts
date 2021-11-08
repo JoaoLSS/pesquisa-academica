@@ -11,7 +11,7 @@ export const createSurvey = gql`
 export const openSurvey = gql`
 	mutation openSurvey($id: ID!) {
 		openSurvey(id: $id) {
-			id
+			title
 		}
 	}
 `;
@@ -19,6 +19,14 @@ export const openSurvey = gql`
 export const closeSurvey = gql`
 	mutation closeSurvey($id: ID!) {
 		closeSurvey(id: $id) {
+			title
+		}
+	}
+`;
+
+export const respondSurvey = gql`
+	mutation respondSurvey($response: RespondSurveyInput!) {
+		respondSurvey(response: $response) {
 			id
 		}
 	}

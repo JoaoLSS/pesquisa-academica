@@ -6,9 +6,9 @@ import { useCallback } from 'react';
 const app = initializeApp(JSON.parse(process.env.REACT_APP_FIREBASE_CONFIG!));
 const auth = getAuth(app);
 
-if (process.env.NODE_ENV === 'development') {
-	connectAuthEmulator(auth, 'http://localhost:9099');
-}
+// if (process.env.NODE_ENV === 'development') {
+// 	connectAuthEmulator(auth, 'http://localhost:9099');
+// }
 
 export const userAtom = atom({
 	key: 'USER-ATOM',

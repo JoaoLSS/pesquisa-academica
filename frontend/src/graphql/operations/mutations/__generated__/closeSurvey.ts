@@ -9,7 +9,7 @@
 
 export interface closeSurvey_closeSurvey {
   __typename: "Survey";
-  id: string;
+  title: string;
 }
 
 export interface closeSurvey {

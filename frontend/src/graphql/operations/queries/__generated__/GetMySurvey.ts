@@ -14,12 +14,19 @@ export interface GetMySurvey_mySurvey_questions_alternatives {
   index: number;
 }
 
+export interface GetMySurvey_mySurvey_questions_answers {
+  __typename: "Answer";
+  id: string;
+  alternativeId: number;
+}
+
 export interface GetMySurvey_mySurvey_questions {
   __typename: "Question";
   id: string;
   text: string;
   index: number;
   alternatives: GetMySurvey_mySurvey_questions_alternatives[];
+  answers: (GetMySurvey_mySurvey_questions_answers | null)[];
 }
 
 export interface GetMySurvey_mySurvey {

@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { atom, atomFamily, selector } from 'recoil';
+import { atom, atomFamily, selector, selectorFamily } from 'recoil';
 
 export const title = atom({
 	key: 'NEW-SURVEY-TITLE',
@@ -39,5 +39,43 @@ export const survey = selector<Survey>({
 			return { title: _questionTitle, alternatives: _alternatives };
 		});
 		return { title: _title, questions: _questions };
+	},
+});
+
+// VALIDATION SELECTORS
+
+export const isAlternativeValid = selectorFamily<boolean, string>({
+	key: 'NEW-SURVEY-ALTERNATIVE-VALIDATION-SELECTOR',
+	get:
+		(id) =>
+		({ get }) => {
+			const _title = get(alternativeTitle(id));
+			return _title.length > 2;
+		},
+});
+
+export const isQuestionValid = selectorFamily<boolean, string>({
+	key: 'NEW-SURVEY-QUESTION-VALIDATION-SELECTOR',
+	get:
+		(id) =>
+		({ get }) => {
+			const _title = get(questionTitle(id));
+			if (_title.length < 3) return false;
+			const altIDs = get(alternativeIDs(id));
+			if (altIDs.length < 2) return false;
+			if (altIDs.some((altID) => !get(isAlternativeValid(altID)))) return false;
+			return true;
+		},
+});
+
+export const isSurveyValid = selector<boolean>({
+	key: 'NEW-SURVEY-VALIDATION-SELECTOR',
+	get: ({ get }) => {
+		const _title = get(title);
+		if (_title.length < 3) return false;
+		const _questionIDs = get(questionIDs);
+		if (!_questionIDs.length) return false;
+		if (_questionIDs.some((questionID) => !get(isQuestionValid(questionID)))) return false;
+		return true;
 	},
 });
