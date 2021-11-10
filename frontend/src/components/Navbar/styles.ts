@@ -5,6 +5,7 @@ export const Container = styled('div')({
 	top: 0,
 	right: 0,
 	left: 0,
+	zIndex: 1000,
 });
 
 export const NavbarSkeleton = styled('div')({

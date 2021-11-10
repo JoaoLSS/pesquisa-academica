@@ -27,4 +27,7 @@ export const ContentContainer = styled('div')({
 	paddingLeft: '60px',
 	width: '100%',
 	display: 'grid',
+	'@media (max-width: 900px)': {
+		paddingLeft: '0',
+	},
 });

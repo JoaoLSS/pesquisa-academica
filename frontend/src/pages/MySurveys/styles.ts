@@ -10,4 +10,7 @@ export const DatesContainer = styled('div')({
 	display: 'grid',
 	gridTemplateColumns: 'auto auto',
 	gap: 10,
+	'@media (max-width: 900px)': {
+		gridTemplateColumns: 'auto',
+	},
 });

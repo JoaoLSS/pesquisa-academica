@@ -5,6 +5,7 @@ export const Container = styled(MUIContainer)({
 	display: 'grid',
 	gap: 20,
 	paddingTop: 50,
+	paddingBottom: 50,
 });
 
 Container.displayName = 'Container';

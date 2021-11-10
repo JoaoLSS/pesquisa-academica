@@ -99,8 +99,8 @@ export const NavbarContainer: React.FC = ({ children }) => {
 		<navbarContext.Provider value={setProps}>
 			<C.Container>
 				<NavbarInternal title={props.title} hide={props.hide} />
-				{children}
 			</C.Container>
+			{children}
 		</navbarContext.Provider>
 	);
 };
