@@ -16,6 +16,12 @@ export const LoginPanel = styled(Paper)({
 		gridArea: 'img',
 		width: '400px',
 	},
+	'@media (max-width: 900px)': {
+		gridTemplateAreas: '"title title""form form"',
+		'& img': {
+			display: 'none',
+		},
+	},
 });
 
 export const SigninForm = styled('div')({

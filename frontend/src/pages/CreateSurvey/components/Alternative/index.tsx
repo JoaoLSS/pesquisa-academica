@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { IconButton, InputAdornment, TextField } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { Close } from '@material-ui/icons';
@@ -35,11 +34,11 @@ export const Alternative: React.FC<AlternativeProps> = ({ questionID, ID, index 
 		<TextField
 			value={title}
 			onChange={onChange(setTitle)}
-			error={title.length < 3}
+			error={!title.length}
 			sx={{ width: '60%' }}
 			InputProps={{ ...startAdornment(index), ...endAdornment(removeAlternative) }}
 		/>
 	);
 };
 
-Alternative.displayName = 'Question';
+Alternative.displayName = 'Alternative';

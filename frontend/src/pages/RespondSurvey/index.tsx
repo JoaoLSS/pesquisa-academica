@@ -23,7 +23,7 @@ const RespondSurvey: React.FC = () => {
 	const response = useRecoilValue(atoms.responses(params.id));
 	const resetData = useRecoilTransaction(callbacks.resetData, [params.id]);
 	const respondSurveyOptions = useRespondSurveyOptions(resetData);
-	const [send] = useMutation(respondSurvey, respondSurveyOptions);
+	const [send, { loading: sending }] = useMutation(respondSurvey, respondSurveyOptions);
 	const [user] = useUser();
 	const isMySurvey = result.surveyIRespond.userId === user?.uid;
 	const alreadyResponded = result.surveyIRespond.questions.some(({ answers }) => answers.length);
@@ -62,7 +62,7 @@ const RespondSurvey: React.FC = () => {
 			))}
 			<ButtonContainer>
 				{isResponseValid && (
-					<Button color="success" onClick={() => send({ response })}>
+					<Button disabled={sending} color="success" onClick={() => send({ response })}>
 						Enviar
 					</Button>
 				)}

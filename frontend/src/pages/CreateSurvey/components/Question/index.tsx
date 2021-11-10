@@ -1,7 +1,5 @@
-/* eslint-disable camelcase */
-import { Button, IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
-import { Delete } from '@material-ui/icons';
+import { Button, InputAdornment, TextField, Typography } from '@material-ui/core';
+import { ButtonContainer } from 'components';
 import { Paper } from 'components/Paper';
 import { excludeQuestion } from 'pages/CreateSurvey/recoil/callbacks';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -46,13 +44,13 @@ export const Question: React.FC<QuestionProps> = ({ ID, index }) => {
 					{alternativeIDs.map((altID, altIndex) => (
 						<Alternative ID={altID} index={altIndex} questionID={ID} key={altID} />
 					))}
-					<Button onClick={() => setAlternativeIDs(genID)}>Adicionar alternativa</Button>
+					<ButtonContainer justify="flex-start">
+						<Button onClick={() => setAlternativeIDs(genID)}>Adicionar alternativa</Button>
+						<Button color="error" onClick={removeQuestion}>
+							Remover questão
+						</Button>
+					</ButtonContainer>
 				</C.AlternativesContainer>
-				<C.ButtonsContainer>
-					<IconButton onClick={removeQuestion}>
-						<Delete sx={{ color: grey[500] }} />
-					</IconButton>
-				</C.ButtonsContainer>
 			</C.Container>
 		</Paper>
 	);

@@ -50,7 +50,7 @@ export const isAlternativeValid = selectorFamily<boolean, string>({
 		(id) =>
 		({ get }) => {
 			const _title = get(alternativeTitle(id));
-			return _title.length > 2;
+			return !!_title.length;
 		},
 });
 

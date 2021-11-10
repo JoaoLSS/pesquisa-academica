@@ -18,7 +18,9 @@ const LoggedRoutes: React.VFC = () => (
 		</Route>
 		<Redirect from="/login" to="/surveys" />
 		<Redirect from="/signin" to="/surveys" />
-		<Redirect from="*" to="/notfound" />
+		<Route path="*">
+			<Pages.NotFound />
+		</Route>
 	</Switch>
 );
 
